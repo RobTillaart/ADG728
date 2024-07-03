@@ -9,8 +9,6 @@
 [![PlatformIO Registry](https://badges.registry.platformio.org/packages/robtillaart/library/ADG728.svg)](https://registry.platformio.org/libraries/robtillaart/ADG728)
 
 
-NEED REWRITE copied from TCA9548 as interface looks alike.
-
 # ADG728
 
 Arduino Library for I2C ADG728 matrix switch. Multiplexer.
@@ -27,6 +25,7 @@ In fact the ADG728 is therefore a **switch**, although often named a multiplexer
 
 The library caches the channels enabled, and if a channel is enabled,
 it will not be enabled again (low level) to optimize performance.
+This can however be overruled.
 
 The device works with 2.3 V to 5.5 V so it should work with most MCU's.
 
@@ -39,6 +38,9 @@ The library is not tested with hardware yet.
 
 I2C address of the device itself is 0x4C .. 0x4F.
 
+
+#### I2C performance
+
 The ADG728 can work up to 400 KHz according to the datasheet.
 
 
@@ -50,12 +52,12 @@ Other multiplexers
 - https://github.com/RobTillaart/HC4052  (2x4 mux)
 - https://github.com/RobTillaart/HC4053  (3x2 mux)
 - https://github.com/RobTillaart/HC4067  (1x16 mux)
-- https://github.com/RobTillaart/ADG725
-- https://github.com/RobTillaart/ADG726
+- https://github.com/RobTillaart/ADG725  (2x16 mux)
+- https://github.com/RobTillaart/ADG726  (2x16 mux)
 - https://github.com/RobTillaart/ADG728  (1x8 mux)
-- https://github.com/RobTillaart/ADG729
-- https://github.com/RobTillaart/ADG730
-- https://github.com/RobTillaart/ADG731
+- https://github.com/RobTillaart/ADG729  (2x4 mux)
+- https://github.com/RobTillaart/ADG731  (1x32 mux)
+- https://github.com/RobTillaart/ADG732  (1x32 mux)
 - https://github.com/RobTillaart/TCA9548  I2C multiplexer
 
 

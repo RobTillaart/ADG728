@@ -9,12 +9,6 @@
 //          https://www.adafruit.com/product/5932
 
 
-// - select unique interface
-
-// - selectSubset
-
-
-
 #include "Arduino.h"
 #include "Wire.h"
 

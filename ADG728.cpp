@@ -109,22 +109,25 @@ void ADG728::setResetPin(uint8_t resetPin)
 
 void ADG728::reset()
 {
-  digitalWrite(_resetPin, LOW);
-  delayMicroseconds(1);           //  datasheet page 6 & 7 - 500 ns  TODO
-  digitalWrite(_resetPin, HIGH);
+  if (_resetPin != -1)
+  {
+    digitalWrite(_resetPin, LOW);
+    delayMicroseconds(1);
+    digitalWrite(_resetPin, HIGH);
+  }
 }
 
 
 void ADG728::setForced(bool forced)
 {
   _forced = forced;
-};
+}
 
 
 bool ADG728::getForced()
 {
   return _forced;
-};
+}
 
 
 int ADG728::getError()
