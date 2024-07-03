@@ -6,7 +6,7 @@
 //    DATE: 2024-07-03
 // PURPOSE: Arduino Library for I2C ADG728 matrix switch. 1x8 Multiplexer.
 //     URL: https://github.com/RobTillaart/ADG728
-//          https://www.adafruit.com/product/5932
+//          https://www.adafruit.com/product/5899
 
 
 #include "Arduino.h"

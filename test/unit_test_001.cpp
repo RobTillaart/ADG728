@@ -45,11 +45,6 @@
 #include "ADG728.h"
 
 
-int expect;  //  TODO needed as there seems a problem with 8 bit comparisons (char?)
-
-uint32_t start, stop;
-
-
 unittest_setup()
 {
   fprintf(stderr, "ADG728_LIB_VERSION: %s\n", (char *) ADG728_LIB_VERSION);
@@ -71,55 +66,55 @@ unittest(test_constants)
 
 unittest(test_constructor)
 {
-  ADG728 tca(0x4C);
+  ADG728 adg(0x4C);
 
   Wire.begin();
 
-  assertTrue(tca.begin());
-  assertTrue(tca.isConnected());
-  assertEqual(8, tca.channelCount());
+  assertTrue(adg.begin());
+  assertTrue(adg.isConnected());
+  assertEqual(8, adg.channelCount());
 }
 
 
 unittest(test_enable)
 {
-  ADG728 tca(0x4C);
+  ADG728 adg(0x4C);
 
   Wire.begin();
 
-  bool b = tca.begin();
+  bool b = adg.begin();
   assertEqual(b, true);
 
   uint8_t mask = 0x00;
   for (int chan = 0; chan < 8; chan++)
   {
-    tca.enableChannel(chan);
-    assertTrue(tca.isEnabled(chan));
+    adg.enableChannel(chan);
+    assertTrue(adg.isEnabled(chan));
   }
-  assertEqual(0xFF, tca.getChannelMask());
-  tca.setChannelMask(0x00);
-  assertEqual(0x00, tca.getChannelMask());
+  assertEqual(0xFF, adg.getChannelMask());
+  adg.setChannelMask(0x00);
+  assertEqual(0x00, adg.getChannelMask());
 }
 
 
 unittest(test_select)
 {
-  ADG728 tca(0x4C);
+  ADG728 adg(0x4C);
 
   Wire.begin();
 
-  bool b = tca.begin();
+  bool b = adg.begin();
   assertEqual(b, true);
 
   uint8_t mask = 0x00;
   for (int chan = 0; chan < 8; chan++)
   {
-    tca.selectChannel(chan);
-    assertTrue(tca.isEnabled(chan));
+    adg.selectChannel(chan);
+    assertTrue(adg.isEnabled(chan));
   }
-  assertEqual(0x80, tca.getChannelMask());
-  tca.setChannelMask(0x00);
-  assertEqual(0x00, tca.getChannelMask());
+  assertEqual(0x80, adg.getChannelMask());
+  adg.setChannelMask(0x00);
+  assertEqual(0x00, adg.getChannelMask());
 }
 
 
