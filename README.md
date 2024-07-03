@@ -18,9 +18,9 @@ Arduino Library for I2C ADG728 matrix switch. 1x8 Multiplexer.
 
 **Experimental**
 
-Library for the ADG728 8 channel multiplexer.
+Library for the ADG728 1 to 8 channel multiplexer.
 
-The library allows you to enable 0 to 7 channels uniquely or simultaneously.
+The library allows you to enable 0 to 8 channels uniquely or simultaneously.
 In fact the ADG728 is therefore a **switch**, although often named a multiplexer.
 
 The library caches the channels enabled, and if a channel is enabled,
