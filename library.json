@@ -1,7 +1,7 @@
 {
   "name": "ADG728",
   "keywords": "I2C,multiplexer",
-  "description": "Arduino Library for I2C ADG728 matrix switch. Multiplexer.",
+  "description": "Arduino Library for I2C ADG728 matrix switch. 1x8 Multiplexer.",
   "authors":
   [
     {

@@ -11,7 +11,7 @@
 
 # ADG728
 
-Arduino Library for I2C ADG728 matrix switch. Multiplexer.
+Arduino Library for I2C ADG728 matrix switch. 1x8 Multiplexer.
 
 
 ## Description
