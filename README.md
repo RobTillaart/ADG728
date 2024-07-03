@@ -18,16 +18,12 @@ Arduino Library for I2C ADG728 matrix switch. Multiplexer.
 
 ## Description
 
+**Experimental**
+
 Library for the ADG728 8 channel multiplexer.
 
-Compatible with PCA9548, PCA9548a, PCA9546, PCA9545, PCA9543.
-
-The library allows you to enable 0 to 7 I2C channels (SDA + SCL) uniquely or simultaneously.
+The library allows you to enable 0 to 7 channels uniquely or simultaneously.
 In fact the ADG728 is therefore a **switch**, although often named a multiplexer.
-A multiplexer is useful if you have 
-- multiple identical devices that have a fixed address,
-- a too small address range or 
-- if there are address conflicts between different I2C devices.
 
 The library caches the channels enabled, and if a channel is enabled,
 it will not be enabled again (low level) to optimize performance.
@@ -35,58 +31,32 @@ it will not be enabled again (low level) to optimize performance.
 The device works with 2.3 V to 5.5 V so it should work with most MCU's.
 
 **Warning**
-The library is not tested extensively.
+
+The library is not tested with hardware yet.
 
 
 #### I2C 
 
-I2C address of the device itself is 0x70 .. 0x77.
-This address can not be used on any of the I2C channels of course.
-
-Note if your first multiplexer is 0x70, you may have an array of 0x71 multiplexers behind it.
-(This will give 8 x 8 = 64 I2C buses, a lot of admin overhead and probably performance penalties).
-
-Pull-up resistors are required on all upstream and downstream channels.
+I2C address of the device itself is 0x4C .. 0x4F.
 
 The ADG728 can work up to 400 KHz according to the datasheet.
 
 
-#### 0.2.0 Breaking change
-
-Version 0.2.0 introduced a breaking change.
-You cannot set the pins in **begin()** any more.
-This reduces the dependency of processor dependent Wire implementations.
-The user has to call **Wire.begin()** and can optionally set the Wire pins 
-before calling the ADG728 **begin()**.
-
-
-#### Compatible devices
-
-This library is expected to work for the following devices: (since 0.2.1)
-
-|  device   |  address  |  channel  |  interrupt  |  reset  |  verified  |  notes  |
-|:---------:|:---------:|:---------:|:-----------:|:-------:|:----------:|:-------:|
-|  PCA9543  |     4     |     2     |      Y      |    Y    |      N     |
-|  PCA9545  |     4     |     4     |      Y      |    Y    |      N     |
-|  PCA9546  |     8     |     4     |             |    Y    |      N     |
-|  PCA9548  |     8     |     8     |             |    Y    |      N     |  equals TCA9648 
-|  PCA9548  |     8     |     8     |             |    Y    |      N     |  equals TCA9648 
-
-
-Note: these are not tested with hardware yet, please share your experiences.
-
-There are however small differences, check the data sheets to see the details.
-- [difference TCA PCA](https://e2e.ti.com/support/interface-group/interface/f/interface-forum/815758/faq-what-is-the-difference-between-an-i2c-device-with-the-family-name-pca-and-tca)
-- https://electronics.stackexchange.com/questions/209616/is-nxps-pca9548a-compatible-with-tis-ADG728a
-- https://www.nxp.com/docs/en/application-note/AN262.pdf
-
-
 #### Related
+
+Other multiplexers
 
 - https://github.com/RobTillaart/HC4051  (1x8 mux)
 - https://github.com/RobTillaart/HC4052  (2x4 mux)
 - https://github.com/RobTillaart/HC4053  (3x2 mux)
 - https://github.com/RobTillaart/HC4067  (1x16 mux)
+- https://github.com/RobTillaart/ADG725
+- https://github.com/RobTillaart/ADG726
+- https://github.com/RobTillaart/ADG728  (1x8 mux)
+- https://github.com/RobTillaart/ADG729
+- https://github.com/RobTillaart/ADG730
+- https://github.com/RobTillaart/ADG731
+- https://github.com/RobTillaart/TCA9548  I2C multiplexer
 
 
 ## Interface
@@ -98,32 +68,9 @@ There are however small differences, check the data sheets to see the details.
 #### Constructor
 
 - **ADG728(const uint8_t deviceAddress, TwoWire \*wire = &Wire)** Constructor.
-deviceAddress = 0x70 .. 0x77, wire = Wire or WireN.
+deviceAddress = 0x4C .. 0x4F, wire = Wire or WireN.
 - **bool begin(uint8_t mask = 0x00)**  set mask of channels to be enabled, default all disabled.
 - **bool isConnected()** returns true if address of the multiplexer is found on I2C bus.
-
-The derived classes PCA9548/PCA9546 have the same interface, except constructor.
-(see #15)
-
-- **PCA9548(const uint8_t deviceAddress, TwoWire \*wire = &Wire)** Constructor.
-- **PCA9546(const uint8_t deviceAddress, TwoWire \*wire = &Wire)** Constructor.
-- **PCA9545(const uint8_t deviceAddress, TwoWire \*wire = &Wire)** Constructor.
-- **PCA9543(const uint8_t deviceAddress, TwoWire \*wire = &Wire)** Constructor.
-
-
-#### Find device
-
-- **bool isConnected(uint8_t address)** returns true if arbitrary address is found on the 
-current I2C bus + selected channels.
-This can be used to verify if a certain device is available (or not) on any **enabled** channel.
-So it does not scan all (8) channels to see if any of them has a device with the address given.
-- **bool isConnected(uint8_t address, uint8_t channel)** find address on selected channel.
-Note that this function changes the selected and or enabled channels.
-Returns true if found.
-- **uint8_t find(uint8_t address)** returns a mask with bits set for channels 
-where the address is found. It scans all channels available.
-Note that this function changes the selected and or enabled channels.
-Returns 0 when the address is not found on any channel, or one bit set per channel found.
 
 
 #### Channel functions
@@ -160,7 +107,8 @@ Optional the library can reset the device.
 
 #### Forced IO
 
-When forced IO is set, all writes and read, e.g. **uint8_t getChannelMask()**, will go to the device.
+When forced IO is set, all writes and read, e.g. **uint8_t getChannelMask()**, 
+will go to the device.
 If the **forced-IO** flag is set to false, it will cache the value of the channels enabled.
 This will result in far more responsive and faster calls.
 Note that writes are only optimized if the channels are already set.  
@@ -172,22 +120,12 @@ Forced IO is also used to speed up **getChannelMask()**.
 - **bool getForced()** returns set flag.
 
 
-#### Interrupts
-
-(not tested)
-
-The PCA9545 and PCA9543 support interrupts. 
-These two derived classes have implemented the
-
-- **uint8_t getInterruptMask()** function that returns a bit mask of interrupts set.
-
-
 ## Error Codes
 
 Not implemented yet, preparation for future.
 
-|  name                   |  value  |  description            |
-|:------------------------|:-------:|:------------------------|
+|  name                  |  value  |  description            |
+|:-----------------------|:-------:|:------------------------|
 |  ADG728_OK             |   00    |  no error               |
 |  ADG728_ERROR_I2C      |  -10    |  detected an I2C error  |
 |  ADG728_ERROR_CHANNEL  |  -20    |  channel out of range   |
@@ -199,22 +137,16 @@ Not implemented yet, preparation for future.
 #### Must
 
 - improve documentation.
-- improve error handling.
+- test with hardware.
 
 #### Should
 
 - add examples.
-- test with hardware.
+- improve error handling.
 
 #### Could
 
-- set an "always enabled" mask.
-  - investigate the consequences!
 - extend the unit tests.
-- **uint8_t find(address)** returns a mask of channel where address is found
-- restore channel in **isConnected(address, channel);
-- add guard in **reset()**, is the pin set?
-
 
 #### Wont
 

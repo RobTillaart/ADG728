@@ -110,7 +110,7 @@ void ADG728::setResetPin(uint8_t resetPin)
 void ADG728::reset()
 {
   digitalWrite(_resetPin, LOW);
-  delayMicroseconds(1);           //  datasheet page 6 & 7 - 500 ns
+  delayMicroseconds(1);           //  datasheet page 6 & 7 - 500 ns  TODO
   digitalWrite(_resetPin, HIGH);
 }
 
