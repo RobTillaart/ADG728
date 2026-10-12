@@ -117,7 +117,8 @@ Multiple channels can also be enabled in one call with a mask.
 
 ### Reset
 
-Optional the library can reset the device.
+Optional the library can reset the device. Reset() only works when the reset pin
+is connected and set. Check datasheet.
 
 - **void setResetPin(uint8_t resetPin)** sets the pin to reset the chip.
 - **void reset()** trigger the reset pin.
