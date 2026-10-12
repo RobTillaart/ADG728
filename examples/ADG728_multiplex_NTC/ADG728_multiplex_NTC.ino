@@ -5,10 +5,12 @@
 //     URL: https://github.com/RobTillaart/ADG728
 //
 //  multiplex NTC
+//  calibrate your hardware in NTC_Celsius()
+//  note: all NTC's need same beta constant
 //
 //                            ADG728                                 uProc
 //                          +------------+                        +------------+
-//  5 Volt ---+----[NTC]----|o 7        o|--+---[10K]--- GND      |            |
+//  5 Volt ---+----[NTC]----|o 7      D o|--+---[10K]--- GND      |            |
 //            +----[NTC]----|o 6         |  |                     |            |
 //            +----[NTC]----|o 5         |  |                     |            |
 //            +----[NTC]----|o 4         |  +---------------------|o A0 analog |
