@@ -16,7 +16,7 @@ ADG728::ADG728(uint8_t deviceAddress, TwoWire *wire)
   _address  = deviceAddress;
   _wire     = wire;
   _mask     = 0x00;
-  _resetPin = 255;
+  _resetPin = ADG728_NO_PIN;
   _forced   = false;
   _error    = ADG728_OK;
   _channels = 8;
@@ -116,7 +116,7 @@ void ADG728::setResetPin(uint8_t resetPin)
 
 void ADG728::reset()
 {
-  if (_resetPin != 255)
+  if (_resetPin != ADG728_NO_PIN)
   {
     digitalWrite(_resetPin, LOW);
     delayMicroseconds(1);

@@ -21,6 +21,8 @@
 #define ADG728_ERROR_I2C               -10  //  not used yet
 #define ADG728_ERROR_CHANNEL           -20  //  not used yet
 
+//  sentinel for the optional reset pin.
+const uint8_t ADG728_NO_PIN = 255;
 
 
 class ADG728
